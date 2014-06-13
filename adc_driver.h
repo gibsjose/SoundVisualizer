@@ -12,11 +12,12 @@
 
 #include "driverlib/adc.h"
 #include "driverlib/gpio.h"
+#include "oled_driver.h"
 
 //Initialize ADC Driver
-int adc_d_init(void);
+int adc_d_init(void (*aFptr)(void));
 
-//Return the current ADC value
-int adc_d_getCurrentADC(void);
+//Trigger an ADC conversion
+int adc_d_triggerConversion(void);
 
 #endif

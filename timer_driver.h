@@ -12,11 +12,10 @@
 #include "driverlib/interrupt.h"
 
 #include "driverlib/timer.h"
+#include "inc/lm3s6965.h"
+#include "oled_driver.h"
 
 //Initialize Timer Driver
-int timer_d_init(void);
-
-//@DEBUG
-int timer_d_get_test_var(void);
+int timer_d_init(void (*aFptr)(void));
 
 #endif
