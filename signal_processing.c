@@ -1,6 +1,7 @@
+#include "math.h"
 
 #define LEN 		3200
-#define ADC_MAX 	65535
+#define ADC_MAX 	1024
 
 double get_average_power(unsigned long *buf)
 {
