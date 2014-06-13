@@ -13,7 +13,7 @@ DRV_DIR = C\:/StellarisWare/boards/ek-lm3s6965/drivers
 INCLUDES = -IC\:/StellarisWare -IC\:/StellarisWare/boards/ek-lm3s6965
 LINKPATHS = -LC\:/StellarisWare/driverlib/gcc-cm3 -LC\:/Program\ Files\ \(x86\)/CodeSourcery/Sourcery\ G++\ Lite/arm-none-eabi/lib/thumb2/
 
-SOURCES = $(SRC_DIR)/visualizer2.c $(SRC_DIR)/adc_driver.c $(SRC_DIR)/timer_driver.c $(SRC_DIR)/oled_driver.c $(SRC_DIR)/startup_gcc.c $(DRV_DIR)/rit128x96x4.c
+SOURCES = $(SRC_DIR)/visualizer.c $(SRC_DIR)/adc_driver.c $(SRC_DIR)/timer_driver.c $(SRC_DIR)/oled_driver.c $(SRC_DIR)/startup_gcc.c $(DRV_DIR)/rit128x96x4.c
 LIBS = -ldriver-cm3 -lc
 OBJS = $(SOURCES:.c=.o)
 
