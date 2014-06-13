@@ -42,7 +42,7 @@ $(ELF): $(OBJS)
 $(TARGET): $(ELF) $(OBJS)
 	@echo "Building $@... "
 	arm-none-eabi-objcopy -O binary $(TARGETNAME).elf $(TARGET)
-	@cp -f $(TARGET) /cygdrive/c/Users/Joe/Desktop
+	@cp -f $(TARGET) "/cygdrive/c/Users/$(USER)/Desktop"
 	@echo "Done"
 	@echo " "
 
