@@ -3,7 +3,7 @@
 //	@author: Adam Luckenbaugh
 
 //Include standard C libs
-#include <stdio.h>
+#include "utils/ustdlib.h"
 
 //Include driver headers
 #include "adc_driver.h"
@@ -51,7 +51,8 @@ int main()
 		//Obtain the current ADC value
 		adc_value = adc_d_getCurrentADC();
 
-		sprintf(str, "ADC = %d", adc_value);
+		usprintf(str, "ADC = %d", adc_value);
+
 		oled_d_print_xy(str, 20, 40);
 	}
 
