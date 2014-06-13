@@ -5,8 +5,6 @@
 //Include standard C libs
 #include "utils/ustdlib.h"
 
-#include <utils/ustdlib.c>
-
 //Include driver headers
 #include "adc_driver.h"
 #include "timer_driver.h"
