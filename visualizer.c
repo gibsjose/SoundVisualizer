@@ -3,7 +3,7 @@
 //	@author: Adam Luckenbaugh
 
 //Include standard C libs
-#include <stdio.h>
+#include "utils/ustdlib.h"
 
 #include <utils/ustdlib.c>
 
