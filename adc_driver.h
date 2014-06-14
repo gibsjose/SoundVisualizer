@@ -6,6 +6,7 @@
 #define ADC_DRIVER_H
 
 #include "inc/hw_types.h"
+#include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/interrupt.h"
@@ -15,9 +16,9 @@
 #include "oled_driver.h"
 
 //Initialize ADC Driver
-int adc_d_init(void (*aFptr)(void));
+void adc_d_init(void (*aFptr)(void));
 
 //Trigger an ADC conversion
-int adc_d_triggerConversion(void);
+void adc_d_triggerConversion(void);
 
 #endif

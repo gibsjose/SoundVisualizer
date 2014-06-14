@@ -15,18 +15,18 @@
 #define MAX_BRIGHTNESS 	15	//Maximum brightness
 
 //Initialize OLED Display Driver
-int oled_d_init(void);
+void oled_d_init(void);
 
 //Print at 0,0 with full brightness
-int oled_d_print_origin(char *str);
+void oled_d_print_origin(char *str);
 
 //Print at x,y with full brightness
-int oled_d_print_xy(char *str, unsigned long x, unsigned long y);
+void oled_d_print_xy(char *str, unsigned long x, unsigned long y);
 
 //Print at x,y with given brightness
-int oled_d_print_xyb(char *str, unsigned long x, unsigned long y, unsigned long b);
+void oled_d_print_xyb(char *str, unsigned long x, unsigned long y, unsigned long b);
 
 //Clear the screen
-int oled_d_clear(void);
+void oled_d_clear(void);
 
 #endif

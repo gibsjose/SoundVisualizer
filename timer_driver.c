@@ -4,43 +4,38 @@
 
 #include "timer_driver.h"
 
-static void (*_Timer_Fptr)(void);
+static void (*_Timer0_fp)(void);
 
-
-void SysTickISR(void)
+void Timer0IntHandler(void)
 {
-   (*_Timer_Fptr)();
+   ADCProcessorTrigger(ADC0_BASE, 3);
+
+   //(*_Timer0_fp)();
 }
 
 //Initialize Timer Driver
-int timer_d_init(void (*aFptr)(void))
+void timer_d_init(void (*aFptr)(void))
 {
-   //save the function pointer used to handle the timer 0 interrupt
-   _Timer_Fptr = aFptr;
+   //Set the function pointer used to handle the timer 0 interrupt
+   _Timer0_fp = aFptr;
 
-   //
-   // Set the clocking to run at 20 MHz (200 MHz / 10) using the PLL.  When
+   //Set the clocking to run at 20 MHz (200 MHz / 10) using the PLL.  When
    // using the ADC, you must either use the PLL or supply a 16 MHz clock
    // source.
-   // TODO: The SYSCTL_XTAL_ value must be changed to match the value of the
-   // crystal on your board.
-   //
+   SysCtlClockSet(SYSCTL_SYSDIV_10 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_8MHZ);
    
-   /*SysCtlClockSet(SYSCTL_SYSDIV_10 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
-                SYSCTL_XTAL_8MHZ);
-	*/
-   SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN |
-                   SYSCTL_XTAL_8MHZ);
+   //SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_8MHZ);
 
    //Enable Timer 0 Peripheral
    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
 
+   /*
    NVIC_ST_CTRL_R = 0;
-   NVIC_ST_RELOAD_R = 128000;   //16ms period for timer
+   NVIC_ST_RELOAD_R = 320000;  //128000 using the 8MHz;   //16ms period for timer: 320,000 for 20MHz timer (using PLL and 1/10 div)
    NVIC_ST_CURRENT_R = 0;     //current counter value = 0
    NVIC_ST_CTRL_R = 0b111;    //clk source = cpu; enable SysTick exception; enable timer
+   */
 
-/*
 	//Configure and Set Timer 0A
 	TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);
 	TimerLoadSet(TIMER0_BASE, TIMER_A, SysCtlClockGet());
@@ -51,6 +46,4 @@ int timer_d_init(void (*aFptr)(void))
 
 	//Enable Timer 0A
 	TimerEnable(TIMER0_BASE, TIMER_A);
-*/
-	return 0;
 }
