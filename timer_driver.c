@@ -8,9 +8,11 @@ static void (*_Timer0_fp)(void);
 
 void Timer0IntHandler(void)
 {
-   ADCProcessorTrigger(ADC0_BASE, 3);
+   //Clear Timer 0 interrupt flag
+   TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
 
-   //(*_Timer0_fp)();
+   //Call our custom function
+   (*_Timer0_fp)();
 }
 
 //Initialize Timer Driver
@@ -23,22 +25,13 @@ void timer_d_init(void (*aFptr)(void))
    // using the ADC, you must either use the PLL or supply a 16 MHz clock
    // source.
    SysCtlClockSet(SYSCTL_SYSDIV_10 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_8MHZ);
-   
-   //SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_8MHZ);
 
    //Enable Timer 0 Peripheral
    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
 
-   /*
-   NVIC_ST_CTRL_R = 0;
-   NVIC_ST_RELOAD_R = 320000;  //128000 using the 8MHz;   //16ms period for timer: 320,000 for 20MHz timer (using PLL and 1/10 div)
-   NVIC_ST_CURRENT_R = 0;     //current counter value = 0
-   NVIC_ST_CTRL_R = 0b111;    //clk source = cpu; enable SysTick exception; enable timer
-   */
-
 	//Configure and Set Timer 0A
 	TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);
-	TimerLoadSet(TIMER0_BASE, TIMER_A, SysCtlClockGet());
+	TimerLoadSet(TIMER0_BASE, TIMER_A, SysCtlClockGet() / 16000);
 
 	//Enable the Timer 0A interrupt
 	IntEnable(INT_TIMER0A);

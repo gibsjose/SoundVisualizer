@@ -10,7 +10,7 @@ static void (*_ADC0_fp)(void);
 //Interrupt handler
 void ADC0IntHandler()
 {
-    //Clear the ADC interrupt flag.
+    //Clear the ADC interrupt flag
     ADCIntClear(ADC0_BASE, 3);
 
     //Call the custom function pointer
@@ -31,15 +31,12 @@ void adc_d_init(void (*aFptr)(void))
     // the data sheet for more information.  GPIO port E needs to be enabled
     // so these pins can be used.
     // TODO: change this to whichever GPIO port you are using.
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
 
     //Select the analog ADC function for these pins.
     // Consult the data sheet to see which functions are allocated per pin.
     // TODO: change this to select the port/pin you are using.
-    GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_7);
-
-    //Set speed to 500KPS
-    SysCtlADCSpeedSet(SYSCTL_ADCSPEED_500KSPS);
+    GPIOPinTypeADC(GPIO_PORTB_BASE, GPIO_PIN_1);
 
     //Disable Sequence 3 for ADC CH0
     ADCSequenceDisable(ADC0_BASE, 3);
@@ -48,7 +45,7 @@ void adc_d_init(void (*aFptr)(void))
     // will do a single sample when the processor sends a signal to start the
     // conversion.  Each ADC module has 4 programmable sequences, sequence 0
     // to sequence 3.  This example is arbitrarily using sequence 3.
-    ADCSequenceConfigure(ADC0_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
+    ADCSequenceConfigure(ADC_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
 
     //Configure step 0 on sequence 3.  Sample channel 0 (ADC_CTL_CH0) in
     // single-ended mode (default) and configure the interrupt flag
@@ -58,7 +55,7 @@ void adc_d_init(void (*aFptr)(void))
     // sequence 0 has 8 programmable steps.  Since we are only doing a single
     // conversion using sequence 3 we will only configure step 0.  For more
     // information on the ADC sequences and steps, reference the datasheet.
-    ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH0 | ADC_CTL_IE | ADC_CTL_END);
+    ADCSequenceStepConfigure(ADC_BASE, 3, 0, ADC_CTL_CH0 | ADC_CTL_IE | ADC_CTL_END);
 
     //Since sample sequence 3 is now configured, it must be enabled.
     ADCSequenceEnable(ADC0_BASE, 3);
@@ -74,6 +71,6 @@ void adc_d_init(void (*aFptr)(void))
 
 void adc_d_triggerConversion(void)
 {
-    //Trigger the ADC conversion.
+    //Trigger ADC Sequence 0
     ADCProcessorTrigger(ADC0_BASE, 3);
 }

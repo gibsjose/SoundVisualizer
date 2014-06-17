@@ -1,9 +1,8 @@
 #include "math.h"
 
-#define LEN 		3200
-#define ADC_MAX 	1024
+#define ADC_MAX 	1023
 
-double get_average_power(unsigned long *buf)
+double get_average_power(unsigned long *buf, unsigned len)
 {
 	/*
 	1) Take absolute value of each datum
@@ -14,10 +13,10 @@ double get_average_power(unsigned long *buf)
 
 	double total = 0;
 
-	for(int i = 0; i < LEN; i++)
+	for(int i = 0; i < len; i++)
 	{
 		total += 20 * log(((double)abs(buf[i])) / ADC_MAX);
 	}
 
-	return total / LEN;
+	return total / len;
 }
