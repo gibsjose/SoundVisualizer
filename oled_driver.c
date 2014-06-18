@@ -44,8 +44,26 @@ void oled_d_print_xyb(char *str, unsigned long x, unsigned long y, unsigned long
 
 void oled_d_display_bar(int aHeight)
 {
+	char * cDarkStr = "#####################";
+	char * cClearStr = "                     ";
+
+	unsigned charHeight = 8;
+
+	unsigned rowInc = OLED_ROWS / charHeight;
+
 	//display a vertical bar with a variable height
 	
+	for(unsigned rows = 0; rows < OLED_ROWS / charHeight; rows++)
+	{
+		if( rowInc - rows < (rowInc * (aHeight / 1023.0) ))
+		{
+			oled_d_print_xy(cDarkStr, 0, rows * charHeight);
+		}
+		else
+		{
+			oled_d_print_xy(cClearStr, 0, rows * charHeight);
+		}
+	}
 }
 
 //Clear the screen

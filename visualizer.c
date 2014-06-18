@@ -50,7 +50,6 @@ static void startup_screen(void)
 //Main
 int main()
 {
-	char str[LEN];
 	int lastCurBuffer = BUF_1;
 
 	//Initialize peripherals

@@ -12,6 +12,9 @@
 
 #include "drivers/rit128x96x4.h"
 
+//Include standard C libs
+#include "utils/ustdlib.h"
+
 #define MAX_BRIGHTNESS 	15	//Maximum brightness
 #define OLED_COLS 128
 #define OLED_ROWS 96
