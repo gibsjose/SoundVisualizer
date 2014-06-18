@@ -16,6 +16,7 @@
 #include "utils/ustdlib.h"
 
 #define MAX_BRIGHTNESS 	15	//Maximum brightness
+#define MIN_BRIGHTNESS  5   //Minimum brightness
 #define OLED_COLS 128
 #define OLED_ROWS 96
 
