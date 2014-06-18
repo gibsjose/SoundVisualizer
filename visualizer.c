@@ -9,7 +9,7 @@
 #include "adc_driver.h"
 #include "timer_driver.h"
 #include "oled_driver.h"
-#include "signal_processing.c"
+#include "signal_processing.h"
 
 //Defines
 #define LEN 			128			//Length of string
@@ -17,11 +17,10 @@
 //16kHz sample frequency
 #define SAMPLES_PER_MS 16
 #define SAMPLE_LEN_MS 200
+#define BUF_LEN ((SAMPLES_PER_MS) * (SAMPLE_LEN_MS))
+
 #define BUF_1 0
 #define BUF_2 1
-
-unsigned long Test = 0;
-unsigned long TimerCount = 0;
 
 //Static prototypes
 static void timer_init(void);
@@ -30,8 +29,8 @@ static void oled_init(void);
 static void interrupt_init(void);
 
 //Sound buffer variables
-static volatile unsigned long _Buf_1[SAMPLES_PER_MS * SAMPLE_LEN_MS];
-static volatile unsigned long _Buf_2[SAMPLES_PER_MS * SAMPLE_LEN_MS];
+static unsigned long _Buf_1[BUF_LEN];
+static unsigned long _Buf_2[BUF_LEN];
 static volatile unsigned _BufCurIndex = 0;	//current array index of the buffers
 static volatile unsigned _CurBuf = BUF_1;	//0 == _Buf_1; 1 == _Buf_2
 
@@ -68,26 +67,21 @@ int main()
 	//Loop
 	while(1)
 	{
-		/*
-		if(Test)
-		{
-			oled_d_print_xy("Test ain't 0!", 20, 40);
-		}
-		
-		//oled_d_clear();
-		oled_d_print_xy("_BufCurIndex = ", 20, 60);
-		usprintf(str, "%u", _BufCurIndex);
-		oled_d_print_xy(str, 20, 80);
-		*/
-
 		if(lastCurBuffer != _CurBuf)
 		{
 			//The last current buffer was changed,
 			//so do the power computations and display the results
-			
-			usprintf(str, "New buf[0] = %d", (_CurBuf == BUF_1) ? _Buf_1[0] : _Buf_2[0]);
-			oled_d_clear();
-			oled_d_print_xy(str, 20, 50);
+			int lCurAvgPwr;
+			if(_CurBuf == BUF_1)
+			{
+				lCurAvgPwr = get_average_power(_Buf_1, BUF_LEN);
+			}
+			else
+			{
+				lCurAvgPwr = get_average_power(_Buf_2, BUF_LEN);
+			}
+
+			oled_d_display_bar(lCurAvgPwr);
 
 			lastCurBuffer = _CurBuf;
 		}
@@ -98,7 +92,6 @@ int main()
 
 void processTimer0(void)
 {
-	TimerCount++;
 	adc_d_triggerConversion();
 }
 
@@ -124,8 +117,6 @@ void processADC0(void)
 
     //increment the current buffer index, wrapping around and changing buffers if necessary
     _BufCurIndex++;
-
-    Test = 1;
 
     if(_BufCurIndex >= (SAMPLES_PER_MS * SAMPLE_LEN_MS - 1))
     {

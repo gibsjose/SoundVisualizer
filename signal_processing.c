@@ -1,8 +1,6 @@
-#include "math.h"
+#include "signal_processing.h"
 
-#define ADC_MAX 	1023
-
-double get_average_power(unsigned long *buf, unsigned len)
+int get_average_power(unsigned long *buf, unsigned len)
 {
 	/*
 	1) Take absolute value of each datum
@@ -11,12 +9,14 @@ double get_average_power(unsigned long *buf, unsigned len)
 	4) Calculate the average power of the 200ms sample
 	*/
 
-	double total = 0;
+	int total = 0;
 
+	
 	for(int i = 0; i < len; i++)
 	{
-		total += 20 * log(((double)abs(buf[i])) / ADC_MAX);
+		//total += 20 * log10(buf[i] / ADC_MAX);
+		total += buf[i];
 	}
-
-	return total / len;
+	
+	return (total / len);
 }

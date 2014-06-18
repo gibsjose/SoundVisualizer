@@ -41,6 +41,13 @@ void oled_d_print_xyb(char *str, unsigned long x, unsigned long y, unsigned long
 	IntMasterEnable();
 }
 
+
+void oled_d_display_bar(int aHeight)
+{
+	//display a vertical bar with a variable height
+	
+}
+
 //Clear the screen
 void oled_d_clear(void)
 {

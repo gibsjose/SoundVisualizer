@@ -13,6 +13,8 @@
 #include "drivers/rit128x96x4.h"
 
 #define MAX_BRIGHTNESS 	15	//Maximum brightness
+#define OLED_COLS 128
+#define OLED_ROWS 96
 
 //Initialize OLED Display Driver
 void oled_d_init(void);
@@ -25,6 +27,9 @@ void oled_d_print_xy(char *str, unsigned long x, unsigned long y);
 
 //Print at x,y with given brightness
 void oled_d_print_xyb(char *str, unsigned long x, unsigned long y, unsigned long b);
+
+//Display a vertical bar
+void oled_d_display_bar(int aHeight);
 
 //Clear the screen
 void oled_d_clear(void);
