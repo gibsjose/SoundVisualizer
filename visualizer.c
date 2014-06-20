@@ -62,7 +62,7 @@ int main()
 
 	//Display startup screen
 	startup_screen();
-
+	
 	//Loop
 	while(1)
 	{
@@ -80,7 +80,12 @@ int main()
 				lCurAvgPwr = get_average_power(_Buf_2, BUF_LEN);
 			}
 
-			oled_d_display_bar(lCurAvgPwr);
+			oled_d_display_bar(lCurAvgPwr * 10);
+			/*
+			char str[LEN];
+			usprintf(str, "Avg ADC: %d", lCurAvgPwr);
+			oled_d_print_xy(str, 20, 40);
+			*/
 
 			lastCurBuffer = _CurBuf;
 		}
