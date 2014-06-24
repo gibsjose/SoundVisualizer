@@ -1,4 +1,5 @@
 //	|oled_driver.c|: Implementation of the OLED Display Drivers
+//
 //	@author: Joe Gibson
 //	@author: Adam Luckenbaugh
 
@@ -41,7 +42,8 @@ void oled_d_print_xyb(char *str, unsigned long x, unsigned long y, unsigned long
 	IntMasterEnable();
 }
 
-
+//Display a full-spanning horizontal bar with varying height and
+// brightness, corresponding to the 'volume' of the input audio signal
 void oled_d_display_bar(int aHeight)
 {
 	char * cDarkStr = "#####################";

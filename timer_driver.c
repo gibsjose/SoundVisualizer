@@ -1,17 +1,21 @@
 //	|timer_driver.c|: Implementation of the Timer Driver
+//
 //	@author: Joe Gibson
 //	@author: Adam Luckenbaugh
 
 #include "timer_driver.h"
 
+//Pointer to the function that will be called
+// by the Timer 0 interrupt handler
 static void (*_Timer0_fp)(void);
 
+//Time 0 interrupt handler
 void Timer0IntHandler(void)
 {
    //Clear Timer 0 interrupt flag
    TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
 
-   //Call our custom function
+   //Call the Timer 0 function pointer
    (*_Timer0_fp)();
 }
 
@@ -23,13 +27,15 @@ void timer_d_init(void (*aFptr)(void))
 
    //Set the clocking to run at 20 MHz (200 MHz / 10) using the PLL.  When
    // using the ADC, you must either use the PLL or supply a 16 MHz clock
-   // source.
+   // source
    SysCtlClockSet(SYSCTL_SYSDIV_10 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_8MHZ);
 
    //Enable Timer 0 Peripheral
    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
 
-	//Configure and Set Timer 0A
+	//Configure and Set Timer 0A.
+   // Timer 0 is configured to be a periodic timer
+   // running at 16kHz
 	TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);
 	TimerLoadSet(TIMER0_BASE, TIMER_A, SysCtlClockGet() / 16000);
 

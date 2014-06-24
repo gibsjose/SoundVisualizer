@@ -1,4 +1,5 @@
 //	|oled_driver.h|: Header for the OLED Display Driver
+//
 //	@author: Joe Gibson
 //	@author: Adam Luckenbaugh
 
@@ -32,7 +33,7 @@ void oled_d_print_xy(char *str, unsigned long x, unsigned long y);
 //Print at x,y with given brightness
 void oled_d_print_xyb(char *str, unsigned long x, unsigned long y, unsigned long b);
 
-//Display a vertical bar
+//Display a vertical bar corresponding to the 'volume' of the audio signal
 void oled_d_display_bar(int aHeight);
 
 //Clear the screen

@@ -1,4 +1,5 @@
 //	|adc_driver.h|: Header for the Analog-to-Digital Converter Driver
+//
 //	@author: Joe Gibson
 //	@author: Adam Luckenbaugh
 
